@@ -1,0 +1,30 @@
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: 'latest'
+
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'Pay-As-You-Go(1)(7888f4ee-144a-4b0e-980b-e9b482677557)'
+    backendAzureRmResourceGroupName: 'terraformtfstate'
+    backendAzureRmStorageAccountName: 'terratfstate1'
+    backendAzureRmContainerName: 'terratfstate'
+    backendAzureRmKey: 'terraform.tfstate'
+
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'Pay-As-You-Go(1)(7888f4ee-144a-4b0e-980b-e9b482677557)'
+
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    environmentServiceNameAzureRM: 'Pay-As-You-Go(1)(7888f4ee-144a-4b0e-980b-e9b482677557)'
